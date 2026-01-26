@@ -28,7 +28,6 @@
             background-color: var(--bg-page);
             color: var(--text-dark);
             line-height: 1.6;
-            -webkit-tap-highlight-color: transparent;
         }
 
         header {
@@ -47,7 +46,7 @@
             font-weight: 800;
         }
 
-        /* --- MODALES --- */
+        /* --- MODALES LEGALES --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -57,9 +56,15 @@
         }
         .modal-content {
             background: white; padding: 40px; border-radius: 15px;
-            max-width: 650px; width: 100%; max-height: 85vh;
+            max-width: 800px; width: 100%; max-height: 85vh;
             overflow-y: auto; position: relative;
         }
+        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #cbd5e1; }
+        
+        .legal-body { text-align: left; font-size: 0.85rem; color: #334155; }
+        .legal-body h2 { color: var(--brand-dark); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .legal-body h3 { color: var(--text-dark); margin: 15px 0 5px; font-size: 0.95rem; }
+        .legal-body p { margin-bottom: 10px; text-align: justify; }
 
         /* --- ESTRUCTURA --- */
         .container { max-width: 1200px; margin: 30px auto; display: grid; grid-template-columns: 1fr; gap: 30px; padding: 0 20px 40px; align-items: start; }
@@ -79,40 +84,78 @@
         
         .img-container { width: 100%; height: 160px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; justify-content: center; align-items: center; }
         .item-img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .no-photo { width: 100%; height: 140px; background-color: var(--no-photo); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #66a3b0; font-size: 0.7rem; font-weight: bold; border: 1px dashed var(--brand-color); }
 
-        .item-card h3 { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 2px; min-height: 2.6em; display: flex; align-items: center; }
-        .item-sub { font-size: 0.75rem; color: var(--brand-dark); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
+        .item-card h3 { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 2px; min-height: 2.6em; display: flex; align-items: center; }
+        .item-sub { font-size: 0.7rem; color: var(--brand-dark); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
         .item-pack { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 15px; }
 
         .qty-box { display: flex; align-items: center; border: 2px solid var(--brand-color); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
         .qty-btn { background: var(--no-photo); border: none; width: 40px; height: 38px; cursor: pointer; font-weight: bold; }
         .qty-val { flex-grow: 1; text-align: center; font-weight: bold; }
-        .btn-add { background: var(--text-dark); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .btn-add { background: var(--text-dark); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
 
-        .extra-fields { background: var(--no-photo); padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--brand-color); }
-        .extra-fields input { width: 100%; padding: 8px; margin-bottom: 5px; border: 1px solid #c9e4ec; border-radius: 4px; font-size: 0.75rem; }
-
+        /* --- SIDEBAR --- */
         .sidebar { background: var(--white); border: 1px solid var(--border); border-top: 5px solid var(--brand-color); padding: 25px; border-radius: 12px; position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; }
         .input-form { width: 100%; padding: 12px; margin-top: 10px; border: 1px solid var(--border); border-radius: 8px; outline: none; }
-        .btn-submit { width: 100%; background: var(--brand-color); color: var(--text-dark); border: none; padding: 16px; margin-top: 20px; font-weight: 800; text-transform: uppercase; border-radius: 8px; cursor: pointer; }
+        
+        .cart-list { margin: 15px 0; font-size: 0.85rem; border-top: 1px solid #eee; padding-top: 10px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px dashed #eee; }
 
-        .btn-pdf { background: #e11d48; color: white; padding: 15px; border-radius: 50px; font-weight: bold; margin-bottom: 10px; border: none; width: 100%; cursor: pointer; }
-        .btn-wa { background: #25D366; color: white; padding: 15px; border-radius: 50px; text-decoration: none; display: flex; justify-content: center; align-items: center; font-weight: bold; width: 100%; }
+        .legal-check-container { margin-top: 15px; display: flex; align-items: flex-start; gap: 8px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #edf2f7; }
+        .legal-check-label { font-size: 0.7rem; color: #475569; }
+        .legal-check-label span { color: var(--brand-dark); text-decoration: underline; cursor: pointer; }
+
+        .btn-submit { width: 100%; background: var(--brand-color); color: var(--text-dark); border: none; padding: 16px; margin-top: 15px; font-weight: 800; text-transform: uppercase; border-radius: 8px; cursor: pointer; }
+
+        footer { background-color: var(--white); padding: 40px 20px; text-align: center; border-top: 1px solid var(--border); margin-top: 40px; }
+        .footer-legal-links { margin-top: 15px; font-size: 0.7rem; color: #94a3b8; }
+        .footer-legal-links span { margin: 0 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header><h1>META<span>TRAFIC</span></h1></header>
 
+<div class="modal-overlay" id="modalAviso">
+    <div class="modal-content">
+        <span class="modal-close" onclick="toggleModal('modalAviso')">✕</span>
+        <div class="legal-body">
+            <h2>AVISO LEGAL</h2>
+            <p><strong>Titular:</strong> METATRAFIC, S.L.U</p>
+            <p><strong>NIF:</strong> B05285853</p>
+            <p><strong>Domicilio:</strong> C/ ARAGON 1 LOCAL 3 41702 DOS HERMANAS (Sevilla)</p>
+            <p><strong>Contacto:</strong> comercial1@metatrafic.com / 634675176</p>
+            <h3>1. OBJETO</h3>
+            <p>Este sitio web ha sido creado para facilitar la realización de pedidos de material de señalización profesional. El acceso y uso implica la aceptación de estas condiciones.</p>
+            <h3>2. PROPIEDAD INTELECTUAL</h3>
+            <p>Los contenidos, logotipos e imágenes son propiedad de METATRAFIC, S.L.U o de sus respectivos fabricantes, quedando prohibida su reproducción sin autorización.</p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalPrivacidad">
+    <div class="modal-content">
+        <span class="modal-close" onclick="toggleModal('modalPrivacidad')">✕</span>
+        <div class="legal-body">
+            <h2>POLÍTICA DE PRIVACIDAD (RGPD)</h2>
+            <p><strong>Responsable:</strong> METATRAFIC, S.L.U</p>
+            <h3>1. FINALIDAD</h3>
+            <p>Tratamos los datos que nos facilita (Nombre y Teléfono) con la única finalidad de gestionar su solicitud de pedido y contactarle para la formalización del mismo.</p>
+            <h3>2. CONSERVACIÓN</h3>
+            <p>Los datos se conservarán mientras dure la relación comercial o durante los años necesarios para cumplir con las obligaciones legales.</p>
+            <h3>3. DERECHOS</h3>
+            <p>Usted tiene derecho a acceder, rectificar o suprimir sus datos enviando un correo a comercial1@metatrafic.com.</p>
+        </div>
+    </div>
+</div>
+
 <div class="modal-overlay" id="confirmModal">
     <div class="modal-content" style="text-align: center;">
         <div style="font-size: 4rem; color: var(--success); margin-bottom: 10px;">✓</div>
         <h2>¡Pedido Solicitado!</h2>
         <div id="confirmCode" style="background: var(--no-photo); padding: 10px 25px; border-radius: 50px; font-weight: 800; margin: 20px 0; border: 1px solid var(--brand-color);">-----</div>
-        <button class="btn-pdf" onclick="descargarPDF()">📄 DESCARGAR RESUMEN PDF</button>
-        <a href="#" id="waConfirmBtn" target="_blank" class="btn-wa">WhatsApp Seguimiento</a>
-        <button style="background: none; border: none; color: #94a3b8; cursor: pointer; margin-top: 20px; text-decoration: underline;" onclick="window.location.reload()">Cerrar y nueva orden</button>
+        <button style="background: #e11d48; color:white; padding:15px; border-radius:50px; width:100%; border:none; font-weight:bold; cursor:pointer;" onclick="descargarPDF()">📄 DESCARGAR RESUMEN PDF</button>
+        <button style="background: none; border: none; color: #94a3b8; cursor: pointer; margin-top: 20px; text-decoration: underline;" onclick="window.location.reload()">Nueva orden</button>
     </div>
 </div>
 
@@ -129,23 +172,36 @@
             <div class="category-card" id="cat-alfombrillas-wrap"><div class="category-header" onclick="toggleCat('alfombrillas-content', this)">ALFOMBRILLAS <span>▼</span></div><div id="alfombrillas-content" class="category-content"><div class="category-inner"><div class="products-grid" id="grid-alfombrillas"></div></div></div></div>
         </div>
     </div>
+    
     <aside class="sidebar">
         <h2>MI PEDIDO</h2>
-        <div id="cart-items" style="margin-bottom: 20px;">Su carrito está vacío</div>
-        <input type="text" id="nombreCLI" class="input-form" placeholder="Empresa / Cliente *">
-        <input type="tel" id="telCLI" class="input-form" placeholder="Teléfono de contacto *">
-        <textarea id="obsCLI" class="input-form" placeholder="Observaciones adicionales..."></textarea>
-        <button class="btn-submit" onclick="enviarPedido()">Confirmar y Enviar Email</button>
+        <div id="cart-items" class="cart-list">Su carrito está vacío</div>
+        
+        <input type="text" id="input_nom" class="input-form" placeholder="Empresa / Cliente *">
+        <input type="tel" id="input_tel" class="input-form" placeholder="Teléfono de contacto *">
+        <textarea id="input_obs" class="input-form" placeholder="Notas adicionales..."></textarea>
+        
+        <div class="legal-check-container">
+            <input type="checkbox" id="legal_check">
+            <div class="legal-check-label">He leído y acepto el <span onclick="toggleModal('modalAviso')">Aviso Legal</span> y la <span onclick="toggleModal('modalPrivacidad')">Privacidad</span>.</div>
+        </div>
+
+        <button class="btn-submit" onclick="enviarPedido()">Confirmar Pedido</button>
     </aside>
 </div>
 
+<footer>
+    <div style="font-weight: 800; color: var(--brand-dark);">METATRAFIC, S.L.U</div>
+    <div class="footer-legal-links"><span onclick="toggleModal('modalAviso')">Aviso Legal</span> | <span onclick="toggleModal('modalPrivacidad')">Privacidad</span></div>
+</footer>
+
 <script>
     const productos = [
-        // BASES
+        // BASES PMMA (Restaurado completo)
         { id: 1, cat: 'bases', nombre: "Base PMMA Estándar 520x110", sub: "SOLO BASE", pack: 50, img: "https://metatrafic.com/27632-large_default/placa-de-matricula-acrilica-ordinaria-520x110.jpg" },
         { id: 2, cat: 'bases', nombre: "Base PMMA Estándar c/ tira publicitaria", sub: "SOLO BASE", pack: 50 },
         { id: 3, cat: 'bases', nombre: "Base PMMA Alfa 340x110", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27638-large_default/placa-pmma-matricula-acrilica-corta-alfa-340x110.jpg" },
-        { id: 4, cat: 'bases', nombre: "Base PMMA Motocicleta 220x110", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
+        { id: 4, cat: 'bases', nombre: "Base PMMA Motocicleta 220x160", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
         { id: 5, cat: 'bases', nombre: "Base PMMA Motocicleta c/ tira publicitaria", sub: "SOLO BASE", pack: 25 },
         { id: 6, cat: 'bases', nombre: "Base PMMA Moto Enduro 132x96", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27635-large_default/placa-pmma-matricula-acrilica-trial-132x96-en-duro.jpg" },
         { id: 7, cat: 'bases', nombre: "Base PMMA Ciclomotor 100x168", sub: "SOLO BASE", pack: 25 },
@@ -153,19 +209,23 @@
         { id: 9, cat: 'bases', nombre: "Base PMMA Cuatriciclo ligero 210x85", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27654-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-210x85.jpg" },
         { id: 10, cat: 'bases', nombre: "Base PMMA Vehículo Especial Cuadrada 280x200", sub: "SOLO BASE", pack: 25 },
         { id: 11, cat: 'bases', nombre: "Base PMMA Vehículo Especial 340x110", sub: "SOLO BASE", pack: 25 },
-        // REFLEXIVO
+        
+        // REFLEXIVO (Restaurado completo)
         { id: 12, cat: 'reflex', nombre: "Bobina Reflexivo Estándar 520x110", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27632-large_default/placa-de-matricula-acrilica-ordinaria-520x110.jpg" },
         { id: 13, cat: 'reflex', nombre: "Bobina Reflexivo Cuatriciclo ligero", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27651-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-520x110.jpg" },
         { id: 14, cat: 'reflex', nombre: "Bobina Reflexivo Remolque Roja", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27657-large_default/placa-pmma-matricula-acrilica-remolque-roja-520x110.jpg" },
         { id: 15, cat: 'reflex', nombre: "Bobina Reflexivo Taxi/VTC Azul", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
-        { id: 18, cat: 'reflex', nombre: "Reflexivo Motocicleta 220x110", sub: "SOLO REFLEXIVO", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
-        // TERMINADAS
+        { id: 16, cat: 'reflex', nombre: "Reflexivo Motocicleta 220x160", sub: "SOLO REFLEXIVO", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
+        
+        // PLACAS TERMINADAS (Restaurado completo)
         { id: 25, cat: 'terminadas', nombre: "Matrícula PMMA Taxi/VTC 520x110", pack: 1, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
-        { id: 26, cat: 'terminadas', nombre: "Matrícula PMMA Especial Cuadrada", pack: 1, img: "https://metatrafic.com/27658-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-280x200.jpg" },
-        { id: 27, cat: 'terminadas', nombre: "Matrícula PMMA Especial Larga", pack: 1, img: "https://metatrafic.com/27659-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-larga-340x110.jpg" },
-        // SEÑALIZACIÓN
+        { id: 26, cat: 'terminadas', nombre: "Matrícula PMMA Especial Cuadrada 280x200", pack: 1, img: "https://metatrafic.com/27658-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-280x200.jpg" },
+        { id: 27, cat: 'terminadas', nombre: "Matrícula PMMA Especial Larga 340x110", pack: 1, img: "https://metatrafic.com/27659-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-larga-340x110.jpg" },
+        
+        // SEÑALIZACIÓN (Restaurado completo)
         { id: 30, cat: 'senalizacion', nombre: "Baliza V16 SOS FLASH", pack: 32, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/Sosflash_3_MDS.webp" },
         { id: 31, cat: 'senalizacion', nombre: "Baliza V16 Metaflash", pack: 50, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/baliza-v16_metaflash.webp" },
+        
         // ALFOMBRILLAS
         { id: 101, cat: 'alfombrillas', nombre: "Alfombrillas a medida", pack: 1, img: "https://www.teamcarengine.com/wp-content/uploads/2025/05/limited_alfombras_moqueta-1.webp", hasExtra: true },
         { id: 102, cat: 'alfombrillas', nombre: "Alfombrillas universales", pack: 5, img: "https://www.teamcarengine.com/wp-content/uploads/2024/06/Alfombrillas-Universales.webp" }
@@ -179,15 +239,15 @@
         c.classList.toggle('collapsed'); 
         el.querySelector('span').innerText = c.classList.contains('collapsed') ? '▼' : '▲'; 
     }
+    
+    function toggleModal(id) { document.getElementById(id).style.display = (document.getElementById(id).style.display === 'flex') ? 'none' : 'flex'; }
 
     function render(filter = "") {
-        const cats = ['bases', 'reflex', 'terminadas', 'senalizacion', 'alfombrillas'];
-        cats.forEach(cat => {
+        ['bases', 'reflex', 'terminadas', 'senalizacion', 'alfombrillas'].forEach(cat => {
             const grid = document.getElementById(`grid-${cat}`);
             const wrap = document.getElementById(`cat-${cat}-wrap`);
             const items = productos.filter(p => p.cat === cat && p.nombre.toLowerCase().includes(filter.toLowerCase()));
-            
-            if (items.length === 0) { wrap.style.display = 'none'; } 
+            if (items.length === 0) wrap.style.display = 'none';
             else {
                 wrap.style.display = 'block';
                 grid.innerHTML = items.map(p => `
@@ -196,12 +256,8 @@
                         <h3>${p.nombre}</h3>
                         ${p.sub ? `<div class="item-sub">${p.sub}</div>` : ''}
                         <p class="item-pack">Pack: ${p.pack}</p>
-                        ${p.hasExtra ? `<div class="extra-fields"><input type="text" placeholder="Modelo" id="mod-${p.id}"><input type="text" placeholder="Matrícula" id="mat-${p.id}"></div>` : ''}
-                        <div class="qty-box">
-                            <button class="qty-btn" onclick="altQty(${p.id},-1)">-</button>
-                            <span class="qty-val" id="q-${p.id}">${p.pack}</span>
-                            <button class="qty-btn" onclick="altQty(${p.id},1)">+</button>
-                        </div>
+                        ${p.hasExtra ? `<div style="margin-bottom:10px;"><input type="text" placeholder="Modelo" id="mod-${p.id}" class="input-form"><input type="text" placeholder="Matrícula" id="mat-${p.id}" class="input-form"></div>` : ''}
+                        <div class="qty-box"><button class="qty-btn" onclick="altQty(${p.id},-1)">-</button><span class="qty-val" id="q-${p.id}">${p.pack}</span><button class="qty-btn" onclick="altQty(${p.id},1)">+</button></div>
                         <button class="btn-add" onclick="add(${p.id})">Añadir</button>
                     </div>`).join('');
             }
@@ -218,13 +274,13 @@
     function add(id) {
         const p = productos.find(x => x.id === id);
         const qty = parseInt(document.getElementById(`q-${id}`).innerText);
-        let extra = "";
+        let info = "";
         if(p.hasExtra) {
             const m = document.getElementById(`mod-${id}`).value;
             const mt = document.getElementById(`mat-${id}`).value;
-            if(m||mt) extra = ` (${m} ${mt})`;
+            if(m||mt) info = ` (${m} ${mt})`;
         }
-        carrito.push({...p, qty, nombreFinal: p.nombre + extra});
+        carrito.push({...p, qty, nombreFinal: p.nombre + info});
         renderCart();
     }
 
@@ -232,28 +288,26 @@
         const div = document.getElementById('cart-items');
         if(carrito.length === 0) { div.innerHTML = "Su carrito está vacío"; return; }
         div.innerHTML = carrito.map((i, idx) => `
-            <div style="border-bottom:1px solid #eee; padding:5px 0; font-size:0.85rem;">
-                ${i.qty} x ${i.nombreFinal}
-                <button onclick="carrito.splice(${idx},1);renderCart();" style="float:right; border:none; background:none; color:red; cursor:pointer;">✕</button>
+            <div class="cart-item">
+                <span>${i.qty} x ${i.nombreFinal}</span>
+                <button onclick="carrito.splice(${idx},1);renderCart();" style="border:none; background:none; color:red; cursor:pointer;">✕</button>
             </div>`).join('');
     }
 
     function enviarPedido() {
-        // SOLUCIÓN DEFINITIVA DE VALIDACIÓN
-        const nom = document.getElementById('nombreCLI').value.trim();
-        const tel = document.getElementById('telCLI').value.trim();
-        const obs = document.getElementById('obsCLI').value;
+        const nom = document.getElementById('input_nom').value.trim();
+        const tel = document.getElementById('input_tel').value.trim();
+        const check = document.getElementById('legal_check').checked;
 
-        if (carrito.length === 0) { alert("El carrito está vacío."); return; }
-        if (nom === "" || tel === "") { alert("Error: Debe indicar Nombre y Teléfono."); return; }
+        if (carrito.length === 0) return alert("Añada productos.");
+        if (!nom || !tel) return alert("Rellene los campos obligatorios (*)");
+        if (!check) return alert("Debe aceptar el Aviso Legal y la Privacidad.");
 
         lastOrderID = "MET-" + Math.random().toString(36).substring(2, 7).toUpperCase();
         let cuerpo = `Cliente: ${nom}\nTel: ${tel}\n\nPedido:\n`;
         carrito.forEach(i => cuerpo += `- ${i.qty} x ${i.nombreFinal}\n`);
-        if(obs) cuerpo += `\nObs: ${obs}`;
 
         document.getElementById('confirmCode').innerText = lastOrderID;
-        document.getElementById('waConfirmBtn').href = `https://wa.me/34697580097?text=Pedido ${lastOrderID}`;
         document.getElementById('confirmModal').style.display = 'flex';
         
         window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=comercial1@metatrafic.com&su=PEDIDO ${lastOrderID}&body=${encodeURIComponent(cuerpo)}`, '_blank');
@@ -262,10 +316,10 @@
     function descargarPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.text("METATRAFIC - RESUMEN DE PEDIDO", 20, 20);
-        doc.text(`ID: ${lastOrderID} | Cliente: ${document.getElementById('nombreCLI').value}`, 20, 30);
-        const rows = carrito.map(i => [i.qty, i.nombreFinal]);
-        doc.autoTable({ startY: 40, head: [['CANT', 'PRODUCTO']], body: rows });
+        doc.text("METATRAFIC, S.L.U - NOTA DE PEDIDO", 20, 20);
+        doc.setFontSize(10);
+        doc.text(`ID: ${lastOrderID} | Cliente: ${document.getElementById('input_nom').value}`, 20, 30);
+        doc.autoTable({ startY: 40, head: [['CANT', 'PRODUCTO']], body: carrito.map(i => [i.qty, i.nombreFinal]) });
         doc.save(`Pedido_${lastOrderID}.pdf`);
     }
 
