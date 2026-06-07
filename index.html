@@ -1,330 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control de descansos por festivos trabajados</title>
+  <style>
+    :root{--bg:#fff7ed;--card:#fff;--text:#111111;--muted:#5f5f5f;--brand:#f97316;--brand-dark:#c2410c;--brand-red:#111111;--brand-light:#fff3e6;--line:#f1d3b8;--ok:#166534;--warn:#a16207;--danger:#b91c1c;--whatsapp:#111111;--shadow:0 10px 25px rgba(17,17,17,.10);--radius:16px}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at top left,#fff 0,#fff7ed 42%,#111 180%);color:var(--text)}
+    header{background:linear-gradient(135deg,#111 0%,#1f1f1f 56%,#f97316 160%);padding:18px;border-bottom:6px solid var(--brand);box-shadow:0 10px 28px rgba(17,17,17,.18)}
+    header .wrap{max-width:1120px;margin:auto;display:flex;gap:18px;align-items:center}.brand-logo{width:132px;max-width:34vw;background:white;border:3px solid var(--brand);border-radius:18px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.22)}
+    .brand-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--brand);font-weight:900;letter-spacing:.04em;text-transform:uppercase;font-size:12px}.brand-kicker:before{content:'';width:30px;height:4px;background:var(--brand-red);border-radius:999px}
+    h1{margin:3px 0 0;font-size:clamp(24px,4vw,38px);color:#fff} header p{margin:8px 0 0;color:#ffe8d1} main{max-width:1120px;margin:22px auto;padding:0 16px 40px}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}@media(min-width:900px){.grid{grid-template-columns:360px 1fr}}.card{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--brand);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}.card h2{margin:0 0 14px;font-size:20px}
+    label{display:block;font-weight:700;margin:12px 0 6px} input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d1d5db;border-radius:12px;font:inherit;background:white} textarea{min-height:72px;resize:vertical}
+    button,a.btn{border:0;border-radius:12px;padding:11px 14px;font-weight:800;cursor:pointer;background:var(--brand);color:#111;font:inherit;box-shadow:0 4px 12px rgba(17,17,17,.16);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}button:hover,a.btn:hover{background:var(--brand-dark);color:#fff}
+    button.secondary,a.secondary{background:var(--brand-light);color:#111;border:1px solid var(--line);box-shadow:none}button.secondary:hover,a.secondary:hover{background:#ffe2c2}button.danger{background:#fee2e2;color:var(--danger)}button.danger:hover{background:#fecaca}button.ghost{background:#f3f4f6;color:#374151}.whatsapp{background:var(--whatsapp)!important;color:#fff!important}.whatsapp:hover{filter:brightness(.95)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}.row>*{flex:1}.actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.muted{color:var(--muted);font-size:14px}.pill{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:5px 10px;background:var(--brand-light);color:var(--brand);font-weight:700;font-size:13px}.list{display:grid;gap:10px;margin-top:12px}.item{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.item-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.item h3{margin:0;font-size:17px}.small{font-size:13px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.tab{background:#fff;color:#111;border:1px solid var(--line)}.tab.active{background:#111;color:white;border-color:#111;box-shadow:none}
+    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:14px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:10px;vertical-align:top}th{background:#fff7ed;font-size:13px;color:#111}tr:last-child td{border-bottom:0}.empty{border:1px dashed #cbd5e1;border-radius:14px;padding:20px;text-align:center;color:var(--muted);background:#fafafa}.today-box{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:14px}.result-card{border-left:5px solid var(--ok);background:#f0fdf4}.future{border-left-color:var(--warn);background:#fffbeb}.past{border-left-color:#64748b;background:#f8fafc}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:10px 12px;border-radius:12px;margin-top:10px}.modal{position:fixed;inset:0;background:rgba(17,17,17,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}.modal.open{display:flex}.modal-card{background:#fff;max-width:560px;width:100%;border-radius:18px;padding:18px;border-top:6px solid var(--brand);box-shadow:0 20px 60px rgba(0,0,0,.25)}
 
-    <meta name="theme-color" content="#99ebff">
-    <title>Pedidos | Metatrafic</title>
-    <style>
-        :root {
-            --brand-color: #99ebff;
-            --brand-dark: #00a8cc;
-            --text-dark: #1a2a3a;
-            --bg-page: #f4f9fb;
-            --white: #ffffff;
-            --border: #d1e9f0;
-            --success: #22c55e;
-            --no-photo: #ebfaff;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg-page);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: var(--white);
-            padding: 25px 0;
-            text-align: center;
-            border-bottom: 5px solid var(--brand-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        header h1 {
-            color: var(--text-dark);
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 800;
-        }
-
-        /* --- MODALES LEGALES --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 40, 60, 0.9);
-            display: none; justify-content: center; align-items: center;
-            z-index: 2000; padding: 20px; backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: white; padding: 40px; border-radius: 15px;
-            max-width: 800px; width: 100%; max-height: 85vh;
-            overflow-y: auto; position: relative;
-        }
-        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #cbd5e1; }
-        
-        .legal-body { text-align: left; font-size: 0.85rem; color: #334155; }
-        .legal-body h2 { color: var(--brand-dark); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .legal-body h3 { color: var(--text-dark); margin: 15px 0 5px; font-size: 0.95rem; }
-        .legal-body p { margin-bottom: 10px; text-align: justify; }
-
-        /* --- ESTRUCTURA --- */
-        .container { max-width: 1200px; margin: 30px auto; display: grid; grid-template-columns: 1fr; gap: 30px; padding: 0 20px 40px; align-items: start; }
-        @media (min-width: 992px) { .container { grid-template-columns: 1.8fr 1.2fr; } }
-        
-        .search-container { margin-bottom: 25px; position: relative; }
-        .search-input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 8px; border: 1px solid var(--border); font-size: 1rem; outline: none; }
-        
-        .category-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
-        .category-header { background-color: var(--brand-color); color: var(--text-dark); padding: 18px 25px; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; text-transform: uppercase; }
-        .category-content { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.3s ease; }
-        .category-content.collapsed { grid-template-rows: 0fr; }
-        .category-inner { overflow: hidden; padding: 0 20px; }
-
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; padding: 20px 0; }
-        .item-card { background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; }
-        
-        .img-container { width: 100%; height: 160px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; justify-content: center; align-items: center; }
-        .item-img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-        .item-card h3 { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 2px; min-height: 2.6em; display: flex; align-items: center; }
-        .item-sub { font-size: 0.7rem; color: var(--brand-dark); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
-        .item-pack { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 15px; }
-
-        .qty-box { display: flex; align-items: center; border: 2px solid var(--brand-color); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
-        .qty-btn { background: var(--no-photo); border: none; width: 40px; height: 38px; cursor: pointer; font-weight: bold; }
-        .qty-val { flex-grow: 1; text-align: center; font-weight: bold; }
-        .btn-add { background: var(--text-dark); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
-
-        /* --- SIDEBAR --- */
-        .sidebar { background: var(--white); border: 1px solid var(--border); border-top: 5px solid var(--brand-color); padding: 25px; border-radius: 12px; position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; }
-        .input-form { width: 100%; padding: 12px; margin-top: 10px; border: 1px solid var(--border); border-radius: 8px; outline: none; }
-        
-        .cart-list { margin: 15px 0; font-size: 0.85rem; border-top: 1px solid #eee; padding-top: 10px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px dashed #eee; }
-
-        .legal-check-container { margin-top: 15px; display: flex; align-items: flex-start; gap: 8px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #edf2f7; }
-        .legal-check-label { font-size: 0.7rem; color: #475569; }
-        .legal-check-label span { color: var(--brand-dark); text-decoration: underline; cursor: pointer; }
-
-        .btn-submit { width: 100%; background: var(--brand-color); color: var(--text-dark); border: none; padding: 16px; margin-top: 15px; font-weight: 800; text-transform: uppercase; border-radius: 8px; cursor: pointer; }
-
-        footer { background-color: var(--white); padding: 40px 20px; text-align: center; border-top: 1px solid var(--border); margin-top: 40px; }
-        .footer-legal-links { margin-top: 15px; font-size: 0.7rem; color: #94a3b8; }
-        .footer-legal-links span { margin: 0 10px; cursor: pointer; }
-    </style>
+    details.worker-accordion{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 4px 14px rgba(15,23,42,.04);overflow:hidden}
+    details.worker-accordion+details.worker-accordion{margin-top:10px}
+    details.worker-accordion summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;background:linear-gradient(90deg,#fff 0,#fff3e6 100%)}
+    details.worker-accordion summary::-webkit-details-marker{display:none}
+    .accordion-name{display:flex;flex-direction:column;gap:6px}.accordion-name h3{margin:0;font-size:17px;color:var(--brand)}
+    .accordion-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.chevron{font-weight:900;color:var(--brand);transition:transform .2s ease;font-size:20px}
+    details[open] .chevron{transform:rotate(90deg)}.accordion-body{padding:0 14px 14px}.accordion-help{margin:0 0 12px;color:var(--muted);font-size:14px}
+  </style>
 </head>
 <body>
-
-<header><h1>META<span>TRAFIC</span></h1></header>
-
-<div class="modal-overlay" id="modalAviso">
-    <div class="modal-content">
-        <span class="modal-close" onclick="toggleModal('modalAviso')">✕</span>
-        <div class="legal-body">
-            <h2>AVISO LEGAL</h2>
-            <p><strong>Titular:</strong> METATRAFIC, S.L.U</p>
-            <p><strong>NIF:</strong> B05285853</p>
-            <p><strong>Domicilio:</strong> C/ ARAGON 1 LOCAL 3 41702 DOS HERMANAS (Sevilla)</p>
-            <p><strong>Contacto:</strong> comercial1@metatrafic.com / 634675176</p>
-            <h3>1. OBJETO</h3>
-            <p>Este sitio web ha sido creado para facilitar la realización de pedidos de material de señalización profesional. El acceso y uso implica la aceptación de estas condiciones.</p>
-            <h3>2. PROPIEDAD INTELECTUAL</h3>
-            <p>Los contenidos, logotipos e imágenes son propiedad de METATRAFIC, S.L.U o de sus respectivos fabricantes, quedando prohibida su reproducción sin autorización.</p>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="modalPrivacidad">
-    <div class="modal-content">
-        <span class="modal-close" onclick="toggleModal('modalPrivacidad')">✕</span>
-        <div class="legal-body">
-            <h2>POLÍTICA DE PRIVACIDAD (RGPD)</h2>
-            <p><strong>Responsable:</strong> METATRAFIC, S.L.U</p>
-            <h3>1. FINALIDAD</h3>
-            <p>Tratamos los datos que nos facilita (Nombre y Teléfono) con la única finalidad de gestionar su solicitud de pedido y contactarle para la formalización del mismo.</p>
-            <h3>2. CONSERVACIÓN</h3>
-            <p>Los datos se conservarán mientras dure la relación comercial o durante los años necesarios para cumplir con las obligaciones legales.</p>
-            <h3>3. DERECHOS</h3>
-            <p>Usted tiene derecho a acceder, rectificar o suprimir sus datos enviando un correo a comercial1@metatrafic.com.</p>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="confirmModal">
-    <div class="modal-content" style="text-align: center;">
-        <div style="font-size: 4rem; color: var(--success); margin-bottom: 10px;">✓</div>
-        <h2>¡Pedido Solicitado!</h2>
-        <div id="confirmCode" style="background: var(--no-photo); padding: 10px 25px; border-radius: 50px; font-weight: 800; margin: 20px 0; border: 1px solid var(--brand-color);">-----</div>
-        <button style="background: #e11d48; color:white; padding:15px; border-radius:50px; width:100%; border:none; font-weight:bold; cursor:pointer;" onclick="descargarPDF()">📄 DESCARGAR RESUMEN PDF</button>
-        <button style="background: none; border: none; color: #94a3b8; cursor: pointer; margin-top: 20px; text-decoration: underline;" onclick="window.location.reload()">Nueva orden</button>
-    </div>
-</div>
-
-<div class="container">
-    <div class="main-content">
-        <div class="search-container">
-            <input type="text" id="productSearch" class="search-input" placeholder="Buscar productos..." onkeyup="filterProducts()">
-        </div>
-        <div id="catalog-container">
-            <div class="category-card" id="cat-bases-wrap"><div class="category-header" onclick="toggleCat('bases-content', this)">BASES PMMA <span>▼</span></div><div id="bases-content" class="category-content"><div class="category-inner"><div class="products-grid" id="grid-bases"></div></div></div></div>
-            <div class="category-card" id="cat-reflex-wrap"><div class="category-header" onclick="toggleCat('reflex-content', this)">REFLEXIVO <span>▼</span></div><div id="reflex-content" class="category-content"><div class="category-inner"><div class="products-grid" id="grid-reflex"></div></div></div></div>
-            <div class="category-card" id="cat-terminadas-wrap"><div class="category-header" onclick="toggleCat('terminadas-content', this)">PLACAS TERMINADAS <span>▼</span></div><div id="terminadas-content" class="category-content"><div class="category-inner"><div class="products-grid" id="grid-terminadas"></div></div></div></div>
-            <div class="category-card" id="cat-senalizacion-wrap"><div class="category-header" onclick="toggleCat('senalizacion-content', this)">SEÑALIZACIÓN <span>▼</span></div><div id="senalizacion-content" class="category-content"><div class="category-inner"><div class="products-grid" id="grid-senalizacion"></div></div></div></div>
-            <div class="category-card" id="cat-alfombrillas-wrap"><div class="category-header" onclick="toggleCat('alfombrillas-content', this)">ALFOMBRILLAS <span>▼</span></div><div id="alfombrillas-content" class="category-content"><div class="category-inner"><div class="products-grid" id="grid-alfombrillas"></div></div></div></div>
-        </div>
-    </div>
-    
-    <aside class="sidebar">
-        <h2>MI PEDIDO</h2>
-        <div id="cart-items" class="cart-list">Su carrito está vacío</div>
-        
-        <input type="text" id="input_nom" class="input-form" placeholder="Empresa / Cliente *">
-        <input type="tel" id="input_tel" class="input-form" placeholder="Teléfono de contacto *">
-        <textarea id="input_obs" class="input-form" placeholder="Notas adicionales..."></textarea>
-        
-        <div class="legal-check-container">
-            <input type="checkbox" id="legal_check">
-            <div class="legal-check-label">He leído y acepto el <span onclick="toggleModal('modalAviso')">Aviso Legal</span> y la <span onclick="toggleModal('modalPrivacidad')">Privacidad</span>.</div>
-        </div>
-
-        <button class="btn-submit" onclick="enviarPedido()">Confirmar Pedido</button>
-    </aside>
-</div>
-
-<footer>
-    <div style="font-weight: 800; color: var(--brand-dark);">METATRAFIC, S.L.U</div>
-    <div class="footer-legal-links"><span onclick="toggleModal('modalAviso')">Aviso Legal</span> | <span onclick="toggleModal('modalPrivacidad')">Privacidad</span></div>
-</footer>
-
+<header><div class="wrap"><img class="brand-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScD6Zwo1hfbnlrV1wALCayfX_OyZnDf2ydyeYgRUAKWg&s=10" alt="Logotipo"/><div><span class="brand-kicker">Gestión interna</span><h1>Control de descansos</h1><p>Gestiona trabajadores, teléfonos, festivos trabajados y días de descanso compensatorio.</p></div></div></header>
+<main><section class="grid"><aside class="card">
+<h2>Añadir trabajador</h2><form id="workerForm"><label for="workerName">Nombre</label><input id="workerName" required placeholder="Ej.: Ana García" autocomplete="off"/><label for="workerPhone">Teléfono WhatsApp</label><input id="workerPhone" type="tel" placeholder="Ej.: 34600111222"/><label for="workerNotes">Notas opcionales</label><textarea id="workerNotes" placeholder="Turno, tienda, departamento..."></textarea><div class="actions"><button type="submit">Guardar trabajador</button></div></form>
+<hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+<h2>Asignar festivo y descanso</h2><form id="assignmentForm"><label for="workerSelect">Trabajador</label><select id="workerSelect" required></select><div class="row"><div><label for="holidayDate">Festivo trabajado</label><input id="holidayDate" type="date" required/></div><div><label for="restDate">Día de descanso</label><input id="restDate" type="date" required/></div></div><label for="holidayName">Nombre del festivo / motivo</label><input id="holidayName" placeholder="Ej.: 12 de octubre, apertura especial..."/><div class="actions"><button type="submit">Registrar</button></div></form>
+<div class="notice small">WhatsApp se abrirá con el mensaje preparado. Por seguridad, el envío final debe confirmarse desde WhatsApp.</div>
+<div class="toolbar"><button class="secondary" id="exportBtn" type="button">Exportar copia</button><button class="ghost" id="importBtn" type="button">Importar</button><input id="importFile" type="file" accept="application/json" hidden/></div><p class="muted">Los datos se guardan en este navegador. Cada nuevo registro genera automáticamente una copia de seguridad JSON que puedes importar.</p>
+</aside><section class="card"><div class="tabs"><button class="tab active" data-tab="today" type="button">Vista por día</button><button class="tab" data-tab="workers" type="button">Trabajadores</button><button class="tab" data-tab="assignments" type="button">Asignaciones</button></div>
+<div id="todayTab"><div class="today-box"><div><h2 style="margin-bottom:4px">¿Quién descansa?</h2><span class="muted">Selecciona una fecha para ver los descansos de ese día.</span></div><div style="min-width:220px"><label for="viewDate" style="margin-top:0">Fecha</label><input id="viewDate" type="date"/></div></div><div id="todayResults" class="list"></div></div>
+<div id="workersTab" hidden><h2>Trabajadores</h2><div id="workersList" class="list"></div></div>
+<div id="assignmentsTab" hidden><h2>Asignaciones pendientes por trabajador</h2><p class="muted">Haz clic una vez sobre un trabajador para desplegar o plegar sus festivos y descansos asociados.</p><div id="assignmentsList"></div></div>
+</section></section></main>
+<div class="modal" id="workerModal"><div class="modal-card"><h2>Modificar trabajador</h2><form id="editWorkerForm"><input id="editWorkerId" type="hidden"/><label>Nombre</label><input id="editWorkerName" required/><label>Teléfono WhatsApp</label><input id="editWorkerPhone" type="tel"/><label>Notas</label><textarea id="editWorkerNotes"></textarea><div class="actions"><button type="submit">Guardar cambios</button><button class="ghost" type="button" onclick="closeModal('workerModal')">Cancelar</button></div></form></div></div>
+<div class="modal" id="assignmentModal"><div class="modal-card"><h2>Modificar festivo y descanso</h2><form id="editAssignmentForm"><input id="editAssignmentId" type="hidden"/><label>Trabajador</label><select id="editAssignmentWorker" required></select><div class="row"><div><label>Festivo trabajado</label><input id="editHolidayDate" type="date" required/></div><div><label>Día de descanso</label><input id="editRestDate" type="date" required/></div></div><label>Nombre del festivo / motivo</label><input id="editHolidayName"/><div class="actions"><button type="submit">Guardar cambios</button><button class="ghost" type="button" onclick="closeModal('assignmentModal')">Cancelar</button></div></form></div></div>
 <script>
-    const productos = [
-        // BASES PMMA (Restaurado completo)
-        { id: 1, cat: 'bases', nombre: "Base PMMA Estándar 520x110", sub: "SOLO BASE", pack: 50, img: "https://metatrafic.com/27632-large_default/placa-de-matricula-acrilica-ordinaria-520x110.jpg" },
-        { id: 2, cat: 'bases', nombre: "Base PMMA Estándar c/ tira publicitaria", sub: "SOLO BASE", pack: 50 },
-        { id: 3, cat: 'bases', nombre: "Base PMMA Alfa 340x110", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27638-large_default/placa-pmma-matricula-acrilica-corta-alfa-340x110.jpg" },
-        { id: 4, cat: 'bases', nombre: "Base PMMA Motocicleta 220x160", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
-        { id: 5, cat: 'bases', nombre: "Base PMMA Motocicleta c/ tira publicitaria", sub: "SOLO BASE", pack: 25 },
-        { id: 6, cat: 'bases', nombre: "Base PMMA Moto Enduro 132x96", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27635-large_default/placa-pmma-matricula-acrilica-trial-132x96-en-duro.jpg" },
-        { id: 7, cat: 'bases', nombre: "Base PMMA Ciclomotor 100x168", sub: "SOLO BASE", pack: 25 },
-        { id: 8, cat: 'bases', nombre: "Base PMMA Ciclomotor Cuadrada 140x120", sub: "SOLO BASE", pack: 25 },
-        { id: 9, cat: 'bases', nombre: "Base PMMA Cuatriciclo ligero 210x85", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27654-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-210x85.jpg" },
-        { id: 10, cat: 'bases', nombre: "Base PMMA Vehículo Especial Cuadrada 280x200", sub: "SOLO BASE", pack: 25 },
-        { id: 11, cat: 'bases', nombre: "Base PMMA Vehículo Especial 340x110", sub: "SOLO BASE", pack: 25 },
-        
-        // REFLEXIVO (Restaurado completo)
-        { id: 12, cat: 'reflex', nombre: "Bobina Reflexivo Estándar 520x110", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27632-large_default/placa-de-matricula-acrilica-ordinaria-520x110.jpg" },
-        { id: 13, cat: 'reflex', nombre: "Bobina Reflexivo Cuatriciclo ligero", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27651-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-520x110.jpg" },
-        { id: 14, cat: 'reflex', nombre: "Bobina Reflexivo Remolque Roja", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27657-large_default/placa-pmma-matricula-acrilica-remolque-roja-520x110.jpg" },
-        { id: 15, cat: 'reflex', nombre: "Bobina Reflexivo Taxi/VTC Azul", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
-        { id: 16, cat: 'reflex', nombre: "Reflexivo Motocicleta 220x160", sub: "SOLO REFLEXIVO", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
-        
-        // PLACAS TERMINADAS (Restaurado completo)
-        { id: 25, cat: 'terminadas', nombre: "Matrícula PMMA Taxi/VTC 520x110", pack: 1, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
-        { id: 26, cat: 'terminadas', nombre: "Matrícula PMMA Especial Cuadrada 280x200", pack: 1, img: "https://metatrafic.com/27658-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-280x200.jpg" },
-        { id: 27, cat: 'terminadas', nombre: "Matrícula PMMA Especial Larga 340x110", pack: 1, img: "https://metatrafic.com/27659-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-larga-340x110.jpg" },
-        
-        // SEÑALIZACIÓN (Restaurado completo)
-        { id: 30, cat: 'senalizacion', nombre: "Baliza V16 SOS FLASH", pack: 32, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/Sosflash_3_MDS.webp" },
-        { id: 31, cat: 'senalizacion', nombre: "Baliza V16 Metaflash", pack: 50, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/baliza-v16_metaflash.webp" },
-        
-        // ALFOMBRILLAS
-        { id: 101, cat: 'alfombrillas', nombre: "Alfombrillas a medida", pack: 1, img: "https://www.teamcarengine.com/wp-content/uploads/2025/05/limited_alfombras_moqueta-1.webp", hasExtra: true },
-        { id: 102, cat: 'alfombrillas', nombre: "Alfombrillas universales", pack: 5, img: "https://www.teamcarengine.com/wp-content/uploads/2024/06/Alfombrillas-Universales.webp" }
-    ];
-
-    let carrito = [];
-    let lastOrderID = "";
-
-    function toggleCat(id, el) { 
-        const c = document.getElementById(id); 
-        c.classList.toggle('collapsed'); 
-        el.querySelector('span').innerText = c.classList.contains('collapsed') ? '▼' : '▲'; 
-    }
-    
-    function toggleModal(id) { document.getElementById(id).style.display = (document.getElementById(id).style.display === 'flex') ? 'none' : 'flex'; }
-
-    function render(filter = "") {
-        ['bases', 'reflex', 'terminadas', 'senalizacion', 'alfombrillas'].forEach(cat => {
-            const grid = document.getElementById(`grid-${cat}`);
-            const wrap = document.getElementById(`cat-${cat}-wrap`);
-            const items = productos.filter(p => p.cat === cat && p.nombre.toLowerCase().includes(filter.toLowerCase()));
-            if (items.length === 0) wrap.style.display = 'none';
-            else {
-                wrap.style.display = 'block';
-                grid.innerHTML = items.map(p => `
-                    <div class="item-card">
-                        <div class="img-container">${p.img ? `<img src="${p.img}" class="item-img">` : `<div class="no-photo"><span>📷</span>Metatrafic</div>`}</div>
-                        <h3>${p.nombre}</h3>
-                        ${p.sub ? `<div class="item-sub">${p.sub}</div>` : ''}
-                        <p class="item-pack">Pack: ${p.pack}</p>
-                        ${p.hasExtra ? `<div style="margin-bottom:10px;"><input type="text" placeholder="Modelo" id="mod-${p.id}" class="input-form"><input type="text" placeholder="Matrícula" id="mat-${p.id}" class="input-form"></div>` : ''}
-                        <div class="qty-box"><button class="qty-btn" onclick="altQty(${p.id},-1)">-</button><span class="qty-val" id="q-${p.id}">${p.pack}</span><button class="qty-btn" onclick="altQty(${p.id},1)">+</button></div>
-                        <button class="btn-add" onclick="add(${p.id})">Añadir</button>
-                    </div>`).join('');
-            }
-        });
-    }
-
-    function altQty(id, dir) { 
-        const el = document.getElementById(`q-${id}`); 
-        const p = productos.find(x => x.id === id); 
-        let val = parseInt(el.innerText) + (dir * p.pack); 
-        el.innerText = val < p.pack ? p.pack : val; 
-    }
-
-    function add(id) {
-        const p = productos.find(x => x.id === id);
-        const qty = parseInt(document.getElementById(`q-${id}`).innerText);
-        let info = "";
-        if(p.hasExtra) {
-            const m = document.getElementById(`mod-${id}`).value;
-            const mt = document.getElementById(`mat-${id}`).value;
-            if(m||mt) info = ` (${m} ${mt})`;
-        }
-        carrito.push({...p, qty, nombreFinal: p.nombre + info});
-        renderCart();
-    }
-
-    function renderCart() {
-        const div = document.getElementById('cart-items');
-        if(carrito.length === 0) { div.innerHTML = "Su carrito está vacío"; return; }
-        div.innerHTML = carrito.map((i, idx) => `
-            <div class="cart-item">
-                <span>${i.qty} x ${i.nombreFinal}</span>
-                <button onclick="carrito.splice(${idx},1);renderCart();" style="border:none; background:none; color:red; cursor:pointer;">✕</button>
-            </div>`).join('');
-    }
-
-    function enviarPedido() {
-        const nom = document.getElementById('input_nom').value.trim();
-        const tel = document.getElementById('input_tel').value.trim();
-        const check = document.getElementById('legal_check').checked;
-
-        if (carrito.length === 0) return alert("Añada productos.");
-        if (!nom || !tel) return alert("Rellene los campos obligatorios (*)");
-        if (!check) return alert("Debe aceptar el Aviso Legal y la Privacidad.");
-
-        lastOrderID = "MET-" + Math.random().toString(36).substring(2, 7).toUpperCase();
-        let cuerpo = `Cliente: ${nom}\nTel: ${tel}\n\nPedido:\n`;
-        carrito.forEach(i => cuerpo += `- ${i.qty} x ${i.nombreFinal}\n`);
-
-        document.getElementById('confirmCode').innerText = lastOrderID;
-        document.getElementById('confirmModal').style.display = 'flex';
-        
-        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=comercial1@metatrafic.com&su=PEDIDO ${lastOrderID}&body=${encodeURIComponent(cuerpo)}`, '_blank');
-    }
-
-    function descargarPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text("METATRAFIC, S.L.U - NOTA DE PEDIDO", 20, 20);
-        doc.setFontSize(10);
-        doc.text(`ID: ${lastOrderID} | Cliente: ${document.getElementById('input_nom').value}`, 20, 30);
-        doc.autoTable({ startY: 40, head: [['CANT', 'PRODUCTO']], body: carrito.map(i => [i.qty, i.nombreFinal]) });
-        doc.save(`Pedido_${lastOrderID}.pdf`);
-    }
-
-    function filterProducts() { render(document.getElementById('productSearch').value); }
-    render();
-</script>
-</body>
-</html>
+const STORAGE_KEY='control_descansos_v1';const $=id=>document.getElementById(id);const todayISO=()=>new Date().toISOString().slice(0,10);const uid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random());let state=load();
+function load(){try{const s=JSON.parse(localStorage.getItem(STORAGE_KEY))||{workers:[],assignments:[]};s.workers=s.workers||[];s.assignments=s.assignments||[];return s}catch{return{workers:[],assignments:[]}}}function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}function formatDate(iso){if(!iso)return'';const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`}function worker(id){return state.workers.find(w=>w.id===id)}function workerName(id){return worker(id)?.name||'Trabajador eliminado'}function esc(t){return String(t??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}function sortByDate(a,b,f){return(a[f]||'').localeCompare(b[f]||'')}
+function downloadBackup(reason='registro'){const safeReason=String(reason).replace(/[^a-z0-9_-]/gi,'_').toLowerCase();const stamp=new Date().toISOString().replace(/[:.]/g,'-');const backup={version:1,createdAt:new Date().toISOString(),reason,workers:state.workers,assignments:state.assignments};const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`backup_control_descansos_${safeReason}_${stamp}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function saveAndBackup(reason){save();downloadBackup(reason)}
+function render(){renderSelects();renderToday();renderWorkers();renderAssignments()}function renderSelects(){['workerSelect','editAssignmentWorker'].forEach(id=>{const sel=$(id);sel.innerHTML='';if(state.workers.length===0){sel.innerHTML='<option value="">Añade primero un trabajador</option>';sel.disabled=true}else{sel.disabled=false;state.workers.slice().sort((a,b)=>a.name.localeCompare(b.name,'es')).forEach(w=>sel.insertAdjacentHTML('beforeend',`<option value="${w.id}">${esc(w.name)}</option>`))}})}
+function waLink(w){const phone=String(w.phone||'').replace(/\D/g,'');if(!phone)return'';const list=state.assignments.filter(a=>a.workerId===w.id).sort((a,b)=>sortByDate(a,b,'restDate'));let msg=`Hola ${w.name}. Te envío tus festivos trabajados y descansos asignados:\n\n`;if(list.length===0)msg+='No tienes descansos/festivos asignados actualmente.';else msg+=list.map(a=>`• Festivo trabajado: ${formatDate(a.holidayDate)}${a.holidayName?' ('+a.holidayName+')':''}\n  Descanso: ${formatDate(a.restDate)}`).join('\n\n');return`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`}
+function waButton(w){const link=waLink(w);return link?`<a class="btn whatsapp" target="_blank" rel="noopener" href="${link}">Enviar WhatsApp</a>`:`<button class="ghost" disabled>Sin teléfono</button>`}
+function renderToday(){const date=$('viewDate').value||todayISO();$('viewDate').value=date;const matches=state.assignments.filter(a=>a.restDate===date).sort((a,b)=>workerName(a.workerId).localeCompare(workerName(b.workerId),'es'));const box=$('todayResults');if(!matches.length){box.innerHTML=`<div class="empty">No hay descansos registrados para el ${formatDate(date)}.</div>`;return}box.innerHTML=matches.map(a=>{const w=worker(a.workerId)||{};const timing=a.holidayDate>date?'Trabajará ese festivo':a.holidayDate<date?'Trabajó ese festivo':'Mismo día que el festivo';const cls=a.holidayDate>date?'future':a.holidayDate<date?'past':'result-card';return`<article class="item ${cls}"><div class="item-head"><div><h3>${esc(workerName(a.workerId))}</h3><p><strong>Descansa:</strong> ${formatDate(a.restDate)}</p><p><strong>${timing}:</strong> ${formatDate(a.holidayDate)}</p>${a.holidayName?`<p><strong>Motivo:</strong> ${esc(a.holidayName)}</p>`:''}${w.phone?`<p class="muted">Tel.: ${esc(w.phone)}</p>`:''}<div class="actions">${waButton(w)}<button class="secondary" onclick="editAssignment('${a.id}')">Modificar</button><button class="danger" onclick="deleteAssignment('${a.id}')">Eliminar</button></div></div></div></article>`}).join('')}
+function renderWorkers(){const box=$('workersList');if(!state.workers.length){box.innerHTML='<div class="empty">Todavía no hay trabajadores.</div>';return}box.innerHTML=state.workers.slice().sort((a,b)=>a.name.localeCompare(b.name,'es')).map(w=>{const count=state.assignments.filter(a=>a.workerId===w.id).length;return`<article class="item"><div class="item-head"><div><h3>${esc(w.name)}</h3><span class="pill">${count} asignación/es</span>${w.phone?`<p><strong>WhatsApp:</strong> ${esc(w.phone)}</p>`:''}${w.notes?`<p class="muted">${esc(w.notes)}</p>`:''}<div class="actions"><button class="secondary" onclick="editWorker('${w.id}')">Modificar</button>${waButton(w)}<button class="danger" onclick="deleteWorker('${w.id}')">Eliminar</button></div></div></div></article>`}).join('')}
+function renderAssignments(){const box=$('assignmentsList');const today=todayISO();const pending=state.assignments.filter(a=>!a.restDate||a.restDate>=today);if(!pending.length){box.innerHTML='<div class="empty">No hay asignaciones pendientes.</div>';return}const workersWithPending=state.workers.slice().sort((a,b)=>a.name.localeCompare(b.name,'es')).map(w=>({worker:w,items:pending.filter(a=>a.workerId===w.id).sort((a,b)=>sortByDate(a,b,'restDate'))})).filter(group=>group.items.length);box.innerHTML=workersWithPending.map(group=>{const w=group.worker;const rows=group.items.map(a=>`<tr><td>${formatDate(a.holidayDate)}</td><td><strong>${formatDate(a.restDate)}</strong></td><td>${esc(a.holidayName||'')}</td><td><div class="actions"><button class="secondary" onclick="editAssignment('${a.id}')">Modificar</button><button class="danger" onclick="deleteAssignment('${a.id}')">Eliminar</button></div></td></tr>`).join('');return`<details class="worker-accordion"><summary><div class="accordion-name"><h3>${esc(w.name)}</h3><div class="accordion-meta"><span class="pill">${group.items.length} pendiente/s</span>${w.phone?`<span class="muted">WhatsApp: ${esc(w.phone)}</span>`:''}</div></div><span class="chevron">›</span></summary><div class="accordion-body"><p class="accordion-help">Festivos trabajados y descansos asociados a ${esc(w.name)}.</p><div class="actions">${waButton(w)}</div><table><thead><tr><th>Festivo trabajado</th><th>Día descanso</th><th>Motivo</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table></div></details>`}).join('')}
+$('workerForm').addEventListener('submit',e=>{e.preventDefault();const name=$('workerName').value.trim(),phone=$('workerPhone').value.trim(),notes=$('workerNotes').value.trim();if(!name)return;if(state.workers.some(w=>w.name.toLowerCase()===name.toLowerCase())){alert('Ya existe un trabajador con ese nombre.');return}state.workers.push({id:uid(),name,phone,notes,createdAt:new Date().toISOString()});saveAndBackup('nuevo_trabajador');e.target.reset();render()});
+$('assignmentForm').addEventListener('submit',e=>{e.preventDefault();const a={id:uid(),workerId:$('workerSelect').value,holidayDate:$('holidayDate').value,restDate:$('restDate').value,holidayName:$('holidayName').value.trim(),createdAt:new Date().toISOString()};if(!a.workerId||!a.holidayDate||!a.restDate)return;const dup=state.assignments.some(x=>x.workerId===a.workerId&&x.holidayDate===a.holidayDate&&x.restDate===a.restDate);if(dup&&!confirm('Esta asignación parece repetida. ¿Quieres guardarla igualmente?'))return;state.assignments.push(a);saveAndBackup('nueva_asignacion');e.target.reset();render()});
+$('editWorkerForm').addEventListener('submit',e=>{e.preventDefault();const w=worker($('editWorkerId').value);if(!w)return;w.name=$('editWorkerName').value.trim();w.phone=$('editWorkerPhone').value.trim();w.notes=$('editWorkerNotes').value.trim();saveAndBackup('modificar_trabajador');closeModal('workerModal');render()});
+$('editAssignmentForm').addEventListener('submit',e=>{e.preventDefault();const a=state.assignments.find(x=>x.id===$('editAssignmentId').value);if(!a)return;a.workerId=$('editAssignmentWorker').value;a.holidayDate=$('editHolidayDate').value;a.restDate=$('editRestDate').value;a.holidayName=$('editHolidayName').value.trim();saveAndBackup('modificar_asignacion');closeModal('assignmentModal');render()});
+$('viewDate').addEventListener('change',renderToday);document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');['today','workers','assignments'].forEach(n=>$(n+'Tab').hidden=n!==btn.dataset.tab)}));
+window.editWorker=id=>{const w=worker(id);if(!w)return;$('editWorkerId').value=w.id;$('editWorkerName').value=w.name||'';$('editWorkerPhone').value=w.phone||'';$('editWorkerNotes').value=w.notes||'';openModal('workerModal')};
+window.editAssignment=id=>{const a=state.assignments.find(x=>x.id===id);if(!a)return;renderSelects();$('editAssignmentId').value=a.id;$('editAssignmentWorker').value=a.workerId;$('editHolidayDate').value=a.holidayDate;$('editRestDate').value=a.restDate;$('editHolidayName').value=a.holidayName||'';openModal('assignmentModal')};
+window.openModal=id=>$(id).classList.add('open');window.closeModal=id=>$(id).classList.remove('open');document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+window.deleteWorker=id=>{const related=state.assignments.filter(a=>a.workerId===id).length;const msg=related?`Este trabajador tiene ${related} asignación/es. Si lo eliminas, también se eliminarán. ¿Continuar?`:'¿Eliminar trabajador?';if(!confirm(msg))return;state.workers=state.workers.filter(w=>w.id!==id);state.assignments=state.assignments.filter(a=>a.workerId!==id);saveAndBackup('eliminar_trabajador');render()};window.deleteAssignment=id=>{if(!confirm('¿Eliminar esta asignación?'))return;state.assignments=state.assignments.filter(a=>a.id!==id);saveAndBackup('eliminar_asignacion');render()};
+$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`copia_control_descansos_${todayISO()}.json`;a.click();URL.revokeObjectURL(a.href)});$('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const imported=JSON.parse(await file.text());if(!Array.isArray(imported.workers)||!Array.isArray(imported.assignments))throw new Error('Formato no válido');if(confirm('Esto sustituirá los datos actuales. ¿Continuar?')){state=imported;save();render()}}catch{alert('No se pudo importar el archivo.')}e.target.value=''});
+$('viewDate').value=todayISO();render();
+</script></body></html>
