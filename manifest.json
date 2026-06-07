@@ -1,21 +1,27 @@
 {
-  "name": "Pedidos Grupo MDS",
-  "short_name": "Grupo MDS",
-  "description": "Plataforma de pedidos B2B Grupo MDS",
+  "name": "Control de Descansos de Trabajadores",
+  "short_name": "Descansos",
+  "description": "Aplicación para gestionar festivos trabajados, descansos asociados y avisos por WhatsApp.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
-  "theme_color": "#fdb933",
+  "theme_color": "#f28c00",
+  "lang": "es-ES",
+  "categories": ["business", "productivity", "utilities"],
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
